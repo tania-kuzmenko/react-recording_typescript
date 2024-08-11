@@ -1,5 +1,6 @@
 // #region imports 
-import React, { useCallback, useMemo, useState } from 'react';
+import React from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Post } from './types/Post';
 import { getMaxId, getPreparedPosts } from './services/posts';
@@ -9,6 +10,7 @@ import { PostList } from './components/PostList';
 
 export const App: React.FC = () => {
   // #region query
+  const [count, setCount] = useState(0);
   const [query, setQuery] = useState('');
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +21,7 @@ export const App: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>(getPreparedPosts());
 
   const filteredPosts = useMemo(() => {
-    return posts.filter(post => post.title.includes(query));
+    return posts.filter(post=> post.title.includes(query));
   }, [query, posts]);
 
   const addPost = useCallback((post: Post) => {
@@ -52,6 +54,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="section py-5">
+      <button onClick={() => setCount(x => x +1)}>{count}</button>
       <div className="columns is-mobile">
         <div className="column">
           <h1 className="title">Posts</h1>
